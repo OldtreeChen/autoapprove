@@ -1,0 +1,99 @@
+﻿
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<!--auto generated #1 start-->
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+		<title>Aifflogoin</title>
+		<script src='quicksilver/jeedui/js/Jui.js?h=7409,8265f35c452984defcbd1d31c0b4864b'></script>
+		<script src='quicksilver/page/util/Utility.js?language=en-us&h=45184,1e3fd9e88657266655f7838604cfad23'></script>
+		<link rel='stylesheet' type='text/css' href='quicksilver/page/util/Style.css?h=10241,581eae9336a3ee839368d777240e71dc'/>
+		<script>
+			var clientData = {"isDevelopMode":false,"language":"en-us","pageId":"17c25e26-7da0-005b-55f2-3c6aa7bb54e5","toolBarJson":{"left":[],"right":[]},"urlArgs":{},"pageCode":"Ecp.Aile.Login"};
+		</script>
+		<!--auto generated #1 end-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="quicksilver/jeedui/js/Jui.js"></script>
+        <script src="quicksilver/page/util/Utility.js"></script>
+        <link rel="stylesheet" type="text/css" href="ecp/page/aile/login/login.css?202411201038">
+        <link rel="stylesheet" href="ecp/app/modules/element-ui/index.css?202403281359">
+        <script src="ecp/app/modules/vue/vue.min.js" charset="utf-8"></script>
+        <script src="ecp/app/util/request.js?202410311738" charset="utf-8"></script>
+        <script src="ecp/app/modules/element-ui/index.js" charset="utf-8"></script>
+
+		<!--auto generated #2 start-->
+		<script src='ecp/page/aile/aiff/aiff.min.js?h=6953,1a34c0307f208d5ca2318df0180639be'></script>
+		<script src='ecp/page/util/EcpCommon.js?h=92,9fd48ad49a287433a73d8bba1727ce06'></script>
+		<script src='ecp/page/system/OneDrive.js?h=2918,cf068c3764a8ee34909a50d6e41f2d6e'></script>
+		<script src='ecp/page/util/EcpEntityListCommon.js?h=1691,907c4993cfcf24d0c906d113653d4bd3'></script>
+		<script src='ecp/page/system/Adaptive.js?h=933,8e6ef77be52cba57fdf5be0433029f7e'></script>
+		<script src='ecp/page/util/EcpEntityFormCommon.js?h=2859,a005cf2e3c2db1c0a69d8608b5c98f41'></script>
+		<script src='custom/replace/util/ReplaceUtil.js?h=745,034f25d5a3cbfefa816891dd9ea57b37'></script>
+		<script src='custom/pft/page/instant/InstantProfitRemind.js?h=1270,e1646a5f3e1871e13a7c86acdd1dbe7f'></script>
+		<script src='ecp/page/aile/aiff/aiff.min.js?h=6953,1a34c0307f208d5ca2318df0180639be'></script>
+		<script src='ecp/page/aile/login/login.js?h=4012,eb47d19dc45aed8fcaf9162ab0155048'></script>
+		<!--auto generated #2 end-->
+	</head>
+	<body toolbar="false" style='overflow:-Scroll;overflow-y:hidden;overflow-x:hidden'>
+		<template id="app">
+            <div v-if="isLoading">
+               <div id="loader-container">
+                <p id="loadingText">Loading</p>
+              </div>
+            </div>
+            <div v-else-if="!isLoading && !loginError" class="login-div">
+              <el-form ref="loginForm" :model="form" :rules="rules" label-width="80px" class="login-box">
+                <h3 class="login-title">AIPOWER</h3>
+                <el-form-item label="姓名" prop="username">
+                  <el-input type="text" placeholder="請輸入姓名" v-model="form.username"/>
+                </el-form-item>
+                <el-form-item label="電話" prop="phone">
+                  <el-input type="text" placeholder="請輸入電話"  :disabled="true" v-model="form.phone"/>
+                </el-form-item>
+                <el-form-item label="性別">
+                  <el-radio-group v-model="form.gender">
+                    <el-radio label="男"></el-radio>
+                    <el-radio label="女"></el-radio>
+                  </el-radio-group>
+                </el-form-item>
+                <el-form-item label="生日">
+                  <el-date-picker
+                          v-model="form.birthday"
+                          type="date"
+                          placeholder="請選擇出生日期"
+                          format="yyyy-MM-dd"
+                          value-format="yyyy-MM-dd"
+                          clearable
+                  ></el-date-picker>
+                </el-form-item>
+                <el-form-item>
+                <!--
+                  <label class='submiting' v-if="submiting">
+                      您已經申請帳號,等待審核中!!!
+                  </label>
+
+                  <label id='LoginLabel' v-if="!submiting" @click="loginUrl()">
+                      已有帳號,立即登錄
+                  </label>
+                  <el-button type="primary" v-if="submiting" @click="location.reload()" style="width: 100%">刷新</el-button>
+                  -->
+                  <el-button type="primary" v-on:click="onBind('loginForm')" style="width: 100%">綁定</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
+            <div id="loadingText" v-else style="width: 80%;">{{errorMessage}}</div>
+
+        </template>
+	</body>
+</html>

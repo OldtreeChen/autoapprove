@@ -1,0 +1,39 @@
+name: eContact Auto Approve
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * 1-5"
+
+concurrency:
+  group: econtact-auto-approve
+  cancel-in-progress: false
+
+jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ECONTACT_BASE_URL: ${{ secrets.ECONTACT_BASE_URL }}
+      ECONTACT_USER: ${{ secrets.ECONTACT_USER }}
+      ECONTACT_PASSWORD: ${{ secrets.ECONTACT_PASSWORD }}
+      ECONTACT_IDENTITY_ID: ${{ secrets.ECONTACT_IDENTITY_ID }}
+      ECONTACT_IDENTITY_NAME: ${{ secrets.ECONTACT_IDENTITY_NAME }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate required secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${ECONTACT_USER:-}" || { echo "Missing ECONTACT_USER secret"; exit 1; }
+          test -n "${ECONTACT_PASSWORD:-}" || { echo "Missing ECONTACT_PASSWORD secret"; exit 1; }
+
+      - name: Run auto approval
+        run: node ./econtact-auto-approve.js --execute

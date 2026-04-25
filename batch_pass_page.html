@@ -1,0 +1,66 @@
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<!--auto generated #1 start-->
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+		<title>批次通過</title>
+		<script src='quicksilver/jeedui/js/Jui.js?h=7409,8265f35c452984defcbd1d31c0b4864b'></script>
+		<script src='quicksilver/page/util/Utility.js?language=zh-tw&h=45184,1e3fd9e88657266655f7838604cfad23'></script>
+		<link rel='stylesheet' type='text/css' href='quicksilver/page/util/Style.css?h=10241,581eae9336a3ee839368d777240e71dc'/>
+		<script>Jui.use('List');</script>
+		<script>
+			var clientData = {"isDevelopMode":false,"language":"zh-tw","pageId":"bd8ddbb4-94b8-46d0-a54a-272122f81f92","toolBarJson":{"left":[],"right":[{"onclick":"WorkItemBatchPass.doPass","name":"Pass","icon":"quicksilver/image/16/Confirm.gif","control":"Button","text":"通過"}]},"items":[{"unitName":"請(休)假單","processName":"陳慕霖-專案二部，補休6.0小時。2026-04-24 19:00~2026-04-25 01:00","id":"ffffff19-dc24-9473-6802-38af463cf204","workItemName":"處級主管"},{"unitName":"出勤打卡","processName":"陳慕霖-專案二部的[預補加班上班卡], 預補的打卡日期為：2026-04-24 19:00","id":"ffffff19-dc24-9e72-3002-38af463cf204","workItemName":"主管審核"},{"unitName":"出勤打卡","processName":"陳慕霖-專案二部的[預補加班下班卡], 預補的打卡日期為：2026-04-25 01:00","id":"ffffff19-dc24-a4b1-7802-38af463cf204","workItemName":"主管審核"}],"urlArgs":{"workItemIds":["ffffff19-dc24-9473-6802-38af463cf204","ffffff19-dc24-9e72-3002-38af463cf204","ffffff19-dc24-a4b1-7802-38af463cf204"]},"pageCode":"Wf.WorkItem.BatchPass"};
+		</script>
+		<!--auto generated #1 end-->
+		<script src='quicksilver/page/util/CommonBusiness.js?h=37866,8c6d9bb93a5666b7e836ecab2180285a'></script>
+		<script src='quicksilver/page/wfinstance/WorkItemBatchPass.js?h=3479,dd92b8c80897ec41e82f1e5eb655481d'></script>
+		<link rel='stylesheet' type='text/css' href='quicksilver/page/wfinstance/WorkItemBatchPass.css?h=398,2324f67b25684003bace7ff4a21db28f'/>
+		<!--auto generated #2 start-->
+		<script src='ecp/page/aile/aiff/aiff.min.js?h=6953,1a34c0307f208d5ca2318df0180639be'></script>
+		<script src='ecp/page/util/EcpCommon.js?h=92,9fd48ad49a287433a73d8bba1727ce06'></script>
+		<script src='ecp/page/system/OneDrive.js?h=2918,cf068c3764a8ee34909a50d6e41f2d6e'></script>
+		<script src='ecp/page/util/EcpEntityListCommon.js?h=1691,907c4993cfcf24d0c906d113653d4bd3'></script>
+		<script src='ecp/page/system/Adaptive.js?h=933,8e6ef77be52cba57fdf5be0433029f7e'></script>
+		<script src='ecp/page/util/EcpEntityFormCommon.js?h=2859,a005cf2e3c2db1c0a69d8608b5c98f41'></script>
+		<script src='custom/replace/util/ReplaceUtil.js?h=745,034f25d5a3cbfefa816891dd9ea57b37'></script>
+		<script src='custom/pft/page/instant/InstantProfitRemind.js?h=1270,e1646a5f3e1871e13a7c86acdd1dbe7f'></script>
+		<!--auto generated #2 end-->
+	</head>
+	<body onload='WorkItemBatchPass.doLoad()'>
+		<!--auto generated #3 start-->
+		<div id='QsToolBar' class='QsToolBar'>
+			<script>
+				var toolBar = Jui.basic.ToolBar.create();
+				toolBar.load(Utility.getToolBarJson());
+			</script>
+		</div>
+		<div id='QsContent' class='QsContent'>
+		<!--auto generated #3 end-->
+		<div id="Comment">
+			<div id="CommentLabel" class="QsMiddleAlign"><div>辦理意見</div></div>
+			<div id="CommentBox"></div>
+		</div>
+		<div id="Passable">
+			<div id="PassableTitle">請在列表中勾選要通過的待辦工作項，並點擊“通過”按鈕：</div>
+			<div id="PassableList"></div>
+		</div>
+		<div id="NotPassable">
+			<div id="NotPassableTitle">以下工作項不能批次通過：</div>
+			<div id="NotPassableList"></div>
+		</div>
+		<!--auto generated #4 start-->
+		</div>
+		<!--auto generated #4 end-->
+	</body>
+</html>

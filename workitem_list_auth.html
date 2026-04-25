@@ -1,0 +1,65 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<!--auto generated #1 start-->
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+		<title>工作項列表</title>
+		<script src='quicksilver/jeedui/js/Jui.js?h=7409,8265f35c452984defcbd1d31c0b4864b'></script>
+		<script src='quicksilver/page/util/Utility.js?language=zh-tw&h=45184,1e3fd9e88657266655f7838604cfad23'></script>
+		<link rel='stylesheet' type='text/css' href='quicksilver/page/util/Style.css?h=10241,581eae9336a3ee839368d777240e71dc'/>
+		<script>Jui.use('List', 'ListView', 'Tree', 'Resizer', 'TagView');</script>
+		<script>
+			var clientData = {"schema":{"name":"我的待辦工作項","id":"d6a812ef-c2f5-4bc3-8571-eb2e77f1906f"},"hasKeywordBox":true,"availableFields":[{"name":"FSortEndTime","title":"完成時間(排序)"},{"name":"FHandleEmployeeId","title":"處理員工"},{"name":"FFromUserComment","title":"來源職務意見"},{"name":"FParticipantName","title":"參與者"},{"name":"FNodeId","title":"環節"},{"name":"FWorkflowId","title":"工作流"},{"name":"FFromType","title":"來源類型"},{"name":"FDeputable","title":"是否可以代理"},{"name":"FProcessUserId","title":"發起人"},{"name":"FResult","title":"結果"},{"name":"FProcessId","title":"業務名稱"},{"name":"FActivityCode","title":"活動編碼"},{"name":"FFromUserName","title":"來源職務"},{"name":"FStatus","title":"工作項狀態"},{"name":"FToUserName","title":"轉辦職務"},{"name":"FEndTime","title":"完成時間"},{"name":"FCreateTime","title":"開始時間"},{"name":"FComment","title":"意見"},{"name":"FDeputingStartTime","title":"逾時代理開始時間"},{"name":"FDrawTime","title":"領取時間"},{"name":"FSortStatus","title":"狀態(排序)"}],"querySchemas":[{"title":"公共查詢方案","items":[{"text":"我的待辦工作項","value":"d6a812ef-c2f5-4bc3-8571-eb2e77f1906f"}]}],"queryFormAutoQuery":false,"language":"zh-tw","toolBarJson":{"left":[],"right":[{"onclick":"WorkItemList.doOpen","name":"Open","icon":"quicksilver/image/16/Open.png","control":"Button","text":"打開"},{"onclick":"WorkItemList.doBatchPass","name":"BatchPass","icon":"quicksilver/image/16/BatchPass.png","control":"Button","text":"批次通過"},{"hint":"重新整理列表內容","onclick":"EntityList.doRefresh","name":"Refresh","icon":"quicksilver/image/16/Refresh.png","control":"Button","text":"重新整理"}]},"queryFormRecentCount":8,"titleJson":{"keyField":"FId","colorConditions":[{"expression":"FStatus=='Drawn' || FStatus=='Suspended'","color":"#E2FFF9"},{"expression":"FStatus=='Timeout'","color":"#FFC8D1"},{"expression":"FStatus=='Finished' || FStatus=='Terminated'","color":"#D3D3D3"},{"expression":"FStatus=='NotDrawn'","color":"#CEF3FF"},{"expression":"Jui.cast.toDate(FCreateTime).setDate(Jui.cast.toDate(FCreateTime).getDate()+3)< new Date(). getTime()","color":"#FF0000","conditions":[{"fieldName":"FEndTime","operator":"NotHasData"},{"fieldName":"FWorkflowId","text":"申請單審核","value":"1888a72c-09e0-0a67-1f37-000c29cfe318","operator":"Equal"}]}],"nameField":"FName","avatarField":"Avatar$","fields":[{"entityType":"Wf.Process","name":"FProcessId","width":402,"control":"EntityBox","title":"業務名稱","textField":"FProcessId$"},{"detailType":"cac143a8-4bfe-433c-b83b-1e71ce8d3ace","entityType":"Qs.User","name":"FProcessUserId","width":100,"control":"EntityBox","title":"發起人","textField":"FProcessUserId$"},{"name":"FParticipantName","width":100,"control":"InputBox","title":"參與者","type":"string","maxLength":100},{"name":"FCreateTime","format":"yyyy-MM-dd HH:mm","width":135,"control":"DateBox","title":"開始時間","align":"center"},{"name":"FEndTime","format":"yyyy-MM-dd HH:mm","width":120,"control":"DateBox","title":"完成時間","align":"center"},{"onbeforedrop":"CommonBusiness.doComboBoxBeforeDrop","name":"FResult","width":50,"control":"ComboBox","dictionaryId":"bbb93944-7973-408b-a8fe-c948daf0356c","title":"結果","items":[{"disabled":false,"text":"同意","value":"Agree"},{"disabled":false,"text":"退回","value":"Back"},{"disabled":false,"text":"送出","value":"Submit"},{"disabled":false,"text":"收回","value":"Withdraw"},{"disabled":false,"text":"作廢","value":"Discard"},{"disabled":false,"text":"終止","value":"Terminate"},{"disabled":false,"text":"轉辦","value":"Transfer"},{"disabled":false,"text":"分配","value":"Assign"},{"disabled":false,"text":"轉群組","value":"TurnGroup"},{"disabled":false,"text":"拒絕","value":"Reject"}],"dropOnly":true,"maxLength":50},{"hasLink":false,"entityType":"Wf.Workflow","name":"FWorkflowId","width":200,"control":"EntityBox","title":"工作流","textField":"FWorkflowId$"},{"hasLink":false,"entityType":"Wf.Node","name":"FNodeId","width":200,"control":"EntityBox","title":"環節","textField":"FNodeId$"},{"onbeforedrop":"CommonBusiness.doComboBoxBeforeDrop","name":"FStatus","width":80,"control":"ComboBox","dictionaryId":"47e7b8ee-3dad-41f3-8dbb-0086eb1df80e","title":"工作項狀態","items":[{"disabled":false,"text":"未領取","value":"NotDrawn"},{"disabled":false,"text":"已領取","value":"Drawn"},{"disabled":false,"text":"完成","value":"Finished"},{"disabled":false,"text":"暫停","value":"Suspended"},{"disabled":false,"text":"逾時","value":"Timeout"},{"disabled":false,"text":"終止","value":"Terminated"}],"dropOnly":true,"maxLength":20}]},"listId":"64476587-1ddc-42e6-81ee-98fb46f81004","hasViewFrame":false,"queryOnLoad":true,"pageType":"List","defaultSchema":{"name":"我的全部工作項","id":"34ba4726-69a8-4818-b855-dea71ae85c92"},"collections":[{"id":"00000000-0000-0000-0013-000000000001","text":"最近使用"},{"id":"00000000-0000-0000-0013-000000000003","text":"下拉選單"}],"unitCode":"Wf.WorkItem","showLeftZone":false,"unitId":"00000000-0000-0000-0001-000000003005","multiRow":false,"quickQueryJson":{"supportCount":true,"currentId":"1766fb49-6cb0-0e3f-3131-00163e040a58","items":[{"badgeColor":"","icon":"quicksilver/image/16/TodoTask.gif","isCollection":false,"listQuerySchemaId":"d6a812ef-c2f5-4bc3-8571-eb2e77f1906f","id":"1766fb49-6cb0-0e3f-3131-00163e040a58"}]},"hasQuerySchemaBox":true,"keywordFields":["FNodeId","FProcessUserId","FProcessId"],"unitName":"工作項","multiPage":true,"keywordTitles":["環節","發起人","業務名稱"],"isDevelopMode":false,"showPageCount":false,"pageId":"ec36c420-4d34-49fa-a5a9-57129eda1246","showTagView":false,"pageCode":"Wf.WorkItem.List","keywordBoxWidth":200,"querySchemaBoxWidth":200,"isSlavePage":false,"hasQuickQueryBox":true,"quickQueryId":"1766fb49-6cb0-0e3f-3131-00163e040a58","urlArgs":{"schemaId":"d6a812ef-c2f5-4bc3-8571-eb2e77f1906f"}};
+		</script>
+		<!--auto generated #1 end-->
+		<script src='quicksilver/page/util/CommonBusiness.js?h=37866,8c6d9bb93a5666b7e836ecab2180285a'></script>
+		<script src='quicksilver/page/query/QueryForm.js?h=13931,2a4edad48b7a88b55f13cf5adb778062'></script>
+		<script src='quicksilver/page/template/EntityList.js?h=50973,d72ff05ef9d3c13a34258d01462ce37b'></script>
+		<link rel='stylesheet' type='text/css' href='quicksilver/page/query/QueryForm.css?h=914,be51f0788f6c3324d4d86bec4eadadfe'/>
+		<link rel='stylesheet' type='text/css' href='quicksilver/page/template/EntityList.css?h=1741,48ac65efe64fb6fa7329c7c2f932d7e5'/>
+		<!--auto generated #2 start-->
+		<script src='ecp/page/aile/aiff/aiff.min.js?h=6953,1a34c0307f208d5ca2318df0180639be'></script>
+		<script src='ecp/page/util/EcpCommon.js?h=92,9fd48ad49a287433a73d8bba1727ce06'></script>
+		<script src='ecp/page/system/OneDrive.js?h=2918,cf068c3764a8ee34909a50d6e41f2d6e'></script>
+		<script src='ecp/page/util/EcpEntityListCommon.js?h=1691,907c4993cfcf24d0c906d113653d4bd3'></script>
+		<script src='ecp/page/system/Adaptive.js?h=933,8e6ef77be52cba57fdf5be0433029f7e'></script>
+		<script src='ecp/page/util/EcpEntityFormCommon.js?h=2859,a005cf2e3c2db1c0a69d8608b5c98f41'></script>
+		<script src='custom/replace/util/ReplaceUtil.js?h=745,034f25d5a3cbfefa816891dd9ea57b37'></script>
+		<script src='custom/pft/page/instant/InstantProfitRemind.js?h=1270,e1646a5f3e1871e13a7c86acdd1dbe7f'></script>
+		<script src='quicksilver/page/wfinstance/WorkItemList.js?h=1456,2f73474e96cd0a3e40adc32902006119'></script>
+		<script>
+			window.addEventListener('load', function(){Jui.util.execute('WorkItemList.doLoad');});
+		</script>
+		<!--auto generated #2 end-->
+	</head>
+	<body>
+		<!--auto generated #3 start-->
+		<div id='QsToolBar' class='QsToolBar'>
+			<script>
+				var toolBar = Jui.basic.ToolBar.create();
+				toolBar.load(Utility.getToolBarJson());
+			</script>
+		</div>
+		<div id='QsContent' class='QsContent QsTopBorder'>
+		<!--auto generated #3 end-->
+		
+		<div id=ListZone class="ListZone"></div>
+		
+		<!--auto generated #4 start-->
+		</div>
+		<!--auto generated #4 end-->
+	</body>
+</html>
