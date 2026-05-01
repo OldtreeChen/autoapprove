@@ -22,6 +22,8 @@ jobs:
       ECONTACT_PASSWORD: ${{ secrets.ECONTACT_PASSWORD }}
       ECONTACT_IDENTITY_ID: ${{ secrets.ECONTACT_IDENTITY_ID }}
       ECONTACT_IDENTITY_NAME: ${{ secrets.ECONTACT_IDENTITY_NAME }}
+      LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+      LINE_TO: ${{ secrets.LINE_TO }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,3 +42,40 @@ jobs:
 
       - name: Run auto approval
         run: node ./econtact-auto-approve.js --execute
+
+      - name: Notify LINE
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -z "${LINE_CHANNEL_ACCESS_TOKEN:-}" ] || [ -z "${LINE_TO:-}" ]; then
+            echo "LINE notification skipped: missing LINE_CHANNEL_ACCESS_TOKEN or LINE_TO secret."
+            exit 0
+          fi
+
+          if [ "${{ job.status }}" = "success" ]; then
+            status_text="success"
+          else
+            status_text="failure"
+          fi
+
+          message=$(cat <<EOF
+          eContact Auto Approve ${status_text}
+          repo: ${{ github.repository }}
+          ref: ${{ github.ref_name }}
+          sha: ${{ github.sha }}
+          run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EOF
+          )
+
+          jq -n \
+            --arg to "$LINE_TO" \
+            --arg text "$message" \
+            '{to: $to, messages: [{type: "text", text: $text}]}' \
+            > line-payload.json
+
+          curl -sS https://api.line.me/v2/bot/message/push \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${LINE_CHANNEL_ACCESS_TOKEN}" \
+            -d @line-payload.json
