@@ -11,6 +11,8 @@ const LIST_ID = "64476587-1ddc-42e6-81ee-98fb46f81004";
 const SCHEMA_ID = "d6a812ef-c2f5-4bc3-8571-eb2e77f1906f";
 const WORK_ITEM_LIST_REFERER =
   'Wf.WorkItem.List.page?args=%7B%22schemaId%22%3A%22d6a812ef-c2f5-4bc3-8571-eb2e77f1906f%22%7D';
+const DGPA_DATASET_URL = "https://data.gov.tw/dataset/14718";
+const DGPA_TIME_ZONE = "Asia/Taipei";
 
 const execute = process.argv.includes("--execute");
 const includeLeaveInBatch = process.argv.includes("--include-leave-in-batch");
@@ -21,6 +23,82 @@ if (!LOGIN_NAME || !PASSWORD) {
 }
 
 const cookieJar = new Map();
+
+function getTaipeiToday() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: DGPA_TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value]));
+  return `${values.year}${values.month}${values.day}`;
+}
+
+function getRocYear(gregorianYear) {
+  return gregorianYear - 1911;
+}
+
+function parseDistributionUrls(html) {
+  return [...html.matchAll(/"contentUrl":"([^"]+)"/g)].map((match) =>
+    match[1].replace(/&amp;/g, "&")
+  );
+}
+
+function findCalendarCsvUrl(urls, rocYear) {
+  const yearMarker = `${encodeURIComponent(`${rocYear}年`)}`.toLowerCase();
+  return (
+    urls.find((url) => url.toLowerCase().includes(yearMarker) && !url.includes("Google")) ||
+    urls.find((url) => url.toLowerCase().includes(yearMarker))
+  );
+}
+
+function parseCalendarCsv(csvText) {
+  const lines = csvText.replace(/^\uFEFF/, "").trim().split(/\r?\n/);
+  const rows = [];
+  for (const line of lines.slice(1)) {
+    const [date, weekday, isHoliday, note = ""] = line.split(",");
+    if (!date) continue;
+    rows.push({ date, weekday, isHoliday, note });
+  }
+  return rows;
+}
+
+async function getOfficialWorkdayStatus(date = getTaipeiToday()) {
+  const gregorianYear = Number(date.slice(0, 4));
+  const rocYear = getRocYear(gregorianYear);
+
+  const datasetResponse = await fetch(DGPA_DATASET_URL);
+  if (!datasetResponse.ok) {
+    throw new Error(`Unable to load DGPA dataset page: HTTP ${datasetResponse.status}`);
+  }
+
+  const datasetHtml = await datasetResponse.text();
+  const csvUrl = findCalendarCsvUrl(parseDistributionUrls(datasetHtml), rocYear);
+  if (!csvUrl) {
+    throw new Error(`Unable to find DGPA calendar CSV for ROC year ${rocYear}.`);
+  }
+
+  const csvResponse = await fetch(csvUrl);
+  if (!csvResponse.ok) {
+    throw new Error(`Unable to load DGPA calendar CSV: HTTP ${csvResponse.status}`);
+  }
+
+  const rows = parseCalendarCsv(await csvResponse.text());
+  const row = rows.find((entry) => entry.date === date);
+  if (!row) {
+    throw new Error(`Date ${date} was not found in DGPA calendar CSV.`);
+  }
+
+  return {
+    date,
+    rocYear,
+    isWorkday: row.isHoliday === "0",
+    note: row.note,
+    weekday: row.weekday,
+    csvUrl,
+  };
+}
 
 function cookieHeader() {
   return [...cookieJar].map(([name, value]) => `${name}=${value}`).join("; ");
@@ -237,6 +315,15 @@ function summarize(record) {
 }
 
 async function main() {
+  const workdayStatus = await getOfficialWorkdayStatus();
+  if (!workdayStatus.isWorkday) {
+    console.log(
+      `DGPA calendar skip: ${workdayStatus.date} (${workdayStatus.weekday}) is not a workday` +
+        `${workdayStatus.note ? `: ${workdayStatus.note}` : ""}`
+    );
+    return;
+  }
+
   await login();
   await switchIdentityIfNeeded();
   const records = await listWorkItems();

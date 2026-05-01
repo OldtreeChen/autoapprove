@@ -40,20 +40,21 @@ To run manually using the encrypted credential:
 .\run-econtact-auto-approve.ps1 -Execute
 ```
 
-To register a weekday scheduled task:
+To register a scheduled task:
 
 ```powershell
 .\register-econtact-task.ps1
 ```
 
-`register-econtact-task.ps1` defaults to `10:00` and schedules Monday-Friday only. Company holidays are not checked.
+`register-econtact-task.ps1` defaults to `10:00` and schedules every day.
+Actual execution is gated by the official DGPA government work calendar, so weekends and official holidays are skipped automatically.
 The registration script first tries PowerShell `ScheduledTasks` cmdlets and falls back to `schtasks.exe` for machines where the module is blocked.
 Before enabling the task, make sure `econtact-credential.xml` has been created by `setup-econtact-credential.ps1`.
 
 ## GitHub Actions schedule
 
-This repo also includes [`C:\Codex\AutoApprove\.github\workflows\econtact-auto-approve.yml`](C:\Codex\AutoApprove\.github\workflows\econtact-auto-approve.yml), which runs at `02:00 UTC` on Monday-Friday.
-That is `10:00` in `Asia/Taipei` and matches the weekday schedule requirement.
+This repo also includes [`C:\Codex\AutoApprove\.github\workflows\econtact-auto-approve.yml`](C:\Codex\AutoApprove\.github\workflows\econtact-auto-approve.yml), which runs at `02:00 UTC` every day.
+That is `10:00` in `Asia/Taipei`, and the script itself skips non-workdays according to the DGPA calendar.
 
 Set these repository secrets before enabling the workflow:
 

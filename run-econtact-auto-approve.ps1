@@ -3,12 +3,6 @@ param(
     [string]$CredentialPath = "$PSScriptRoot\econtact-credential.xml"
 )
 
-$today = Get-Date
-if ($today.DayOfWeek -in @([DayOfWeek]::Saturday, [DayOfWeek]::Sunday)) {
-    Write-Host "Weekend, skipped."
-    exit 0
-}
-
 if (-not (Test-Path -LiteralPath $CredentialPath)) {
     throw "Credential file not found: $CredentialPath. Run setup-econtact-credential.ps1 first."
 }

@@ -10,11 +10,11 @@ $taskCommand = "cmd.exe /c `"$taskRunner`""
 
 try {
     $action = New-ScheduledTaskAction -Execute $taskRunner
-    $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday,Tuesday,Wednesday,Thursday,Friday -At $At
+    $trigger = New-ScheduledTaskTrigger -Daily -At $At
     $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interactive -RunLevel Limited
 
     Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Principal $principal -Force | Out-Null
-    Write-Host "Registered task '$TaskName' for Monday-Friday at $At via ScheduledTasks module."
+    Write-Host "Registered task '$TaskName' for daily at $At via ScheduledTasks module."
     exit 0
 }
 catch {
@@ -26,8 +26,7 @@ $schtasksArgs = @(
     "/Create",
     "/F",
     "/TN", $TaskName,
-    "/SC", "WEEKLY",
-    "/D", "MON,TUE,WED,THU,FRI",
+    "/SC", "DAILY",
     "/ST", $At,
     "/TR", $taskCommand
 )
@@ -37,4 +36,4 @@ if ($LASTEXITCODE -ne 0) {
     throw "schtasks.exe failed with exit code $LASTEXITCODE."
 }
 
-Write-Host "Registered task '$TaskName' for Monday-Friday at $At via schtasks.exe."
+Write-Host "Registered task '$TaskName' for daily at $At via schtasks.exe."

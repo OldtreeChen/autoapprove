@@ -1,9 +1,12 @@
 name: eContact Auto Approve
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
   schedule:
-    - cron: "0 2 * * 1-5"
+    - cron: "0 2 * * *"
 
 concurrency:
   group: econtact-auto-approve
